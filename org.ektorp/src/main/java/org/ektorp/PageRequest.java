@@ -254,11 +254,11 @@ public class PageRequest {
 		}
 	} 
 	
-	private static final class KeyIdPair {
+	public static final class KeyIdPair {
 		final JsonNode key;
 		final String docId;
 
-		KeyIdPair(JsonNode key, String docId) {
+		public KeyIdPair(JsonNode key, String docId) {
 			this.key = key;
 			this.docId = docId;
 		}
