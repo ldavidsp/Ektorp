@@ -20,6 +20,10 @@ public class ComplexKey {
 	private static final Object EMPTY_OBJECT = new Object();
 	private static final Object[] EMPTY_ARRAY = new Object[0];
 
+	public List<Object> getComponents() {
+		return components;
+	}
+
 	public static ComplexKey of(Object... components) {
 		return new ComplexKey(components);
 	}
