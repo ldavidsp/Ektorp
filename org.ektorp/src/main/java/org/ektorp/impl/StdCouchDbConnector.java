@@ -50,7 +50,8 @@ public class StdCouchDbConnector implements CouchDbConnector {
     private final CouchDbInstance dbInstance;
 
 	protected final RevisionResponseHandler revisionHandler;
-    private final DocIdResponseHandler docIdResponseHandler;
+    protected final DocIdResponseHandler docIdResponseHandler;
+    protected final DocComplexKeyResponseHandler docComplexKeyResponseHandler;
 
     private LocalBulkBuffer localBulkBuffer;
 
@@ -80,6 +81,7 @@ public class StdCouchDbConnector implements CouchDbConnector {
         this.restTemplate = new RestTemplate(dbi.getConnection());
         this.revisionHandler = new RevisionResponseHandler(objectMapper);
         this.docIdResponseHandler = new DocIdResponseHandler(objectMapper);
+        this.docComplexKeyResponseHandler = new DocComplexKeyResponseHandler(objectMapper);
         this.queryExecutor = new DefaultQueryExecutor(this.restTemplate);
 
         collectionBulkExecutor = new BulkOperationCollectionBulkExecutor(dbURI, restTemplate, objectMapper) {
@@ -331,12 +333,12 @@ public class StdCouchDbConnector implements CouchDbConnector {
     @Override
     public String getCurrentRevision(String id) {
     	assertDocIdHasValue(id);
-    	return restTemplate.head(dbURI.append(id).toString(), new StdResponseHandler<String>(){
-    		@Override
-    		public String success(HttpResponse hr) throws Exception {
-    			return hr.getETag();
-    		}
-    	});
+    	return restTemplate.head(dbURI.append(id).toString(), new StdResponseHandler<String>() {
+            @Override
+            public String success(HttpResponse hr) throws Exception {
+                return hr.getETag();
+            }
+        });
     }
     
     
@@ -437,7 +439,23 @@ public class StdCouchDbConnector implements CouchDbConnector {
         return executeQuery(query, rh);
     }
 
-	protected <T> T executeQuery(final ViewQuery query, ResponseCallback<T> rh) {
+    @Override
+    public List<String> queryViewForIds(final ViewQuery query) {
+        Assert.notNull(query, "query may not be null");
+        query.dbPath(dbURI.toString());
+
+        return executeQuery(query, docIdResponseHandler);
+    }
+
+    @Override
+    public List<ComplexKey> queryViewForComplexKeys(final ViewQuery query) {
+        Assert.notNull(query, "query may not be null");
+        query.dbPath(dbURI.toString());
+
+        return executeQuery(query, docComplexKeyResponseHandler);
+    }
+
+    protected <T> T executeQuery(final ViewQuery query, ResponseCallback<T> rh) {
 		return queryExecutor.executeQuery(query, rh);
 	}
 

@@ -60,4 +60,17 @@ public class ComplexKey {
 		}
 		return key;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		ComplexKey that = (ComplexKey) o;
+		return Objects.equals(components, that.components);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(components);
+	}
 }
