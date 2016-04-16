@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.JsonNode;
  *
  */
 public class ReplicationStatus implements Serializable {
-
 	private static final long serialVersionUID = 6617269292660336903L;
 
 	@JsonProperty("ok")

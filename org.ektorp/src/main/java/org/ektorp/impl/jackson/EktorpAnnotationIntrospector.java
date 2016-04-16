@@ -27,7 +27,6 @@ public class EktorpAnnotationIntrospector extends NopAnnotationIntrospector {
 	private final Set<Class<?>> annotatedClasses = new HashSet<Class<?>>();
 
 
-	@Override
 	public boolean isHandled(Annotation ann) {
 		return DocumentReferences.class == ann.annotationType();
 	}

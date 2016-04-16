@@ -105,7 +105,7 @@ public class CouchDbRepositorySupport<T> implements GenericRepository<T> {
 		return loadAllByAllDocIds();
 	}
 
-	private boolean designDocContainsAllView() {
+	protected boolean designDocContainsAllView() {
 		if (db.contains(stdDesignDocumentId)) {
 			DesignDocument dd = db.get(DesignDocument.class, stdDesignDocumentId);
 			return dd.containsView("all");
