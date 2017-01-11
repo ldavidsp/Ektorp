@@ -59,7 +59,7 @@ public class StdCouchDbConnector implements CouchDbConnector {
 
     private BulkExecutor<InputStream> inputStreamBulkExecutor;
 
-    private final static Options EMPTY_OPTIONS = new Options();
+    protected final static Options EMPTY_OPTIONS = new Options();
 
     public StdCouchDbConnector(String databaseName, CouchDbInstance dbInstance) {
         this(databaseName, dbInstance, new StdObjectMapperFactory());
@@ -294,7 +294,7 @@ public class StdCouchDbConnector implements CouchDbConnector {
                 });
     }
 
-    private void applyOptions(Options options, URI uri) {
+    protected void applyOptions(Options options, URI uri) {
         if (options != null && !options.isEmpty()) {
             uri.params(options.getOptions());
         }

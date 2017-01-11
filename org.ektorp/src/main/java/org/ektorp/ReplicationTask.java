@@ -18,12 +18,16 @@ public interface ReplicationTask extends ActiveTask {
      */
     String getReplicationDocumentId();
 
-    /**
+	String getNode();
+
+	/**
      * @return a boolean indicating whether or not the replication rule being processed is continuous
      */
     boolean isContinuous();
 
-    /**
+	long getChangesPending();
+
+	/**
      * @return the total number of document writes which have failed so far in this task
      */
     long getWriteFailures();
@@ -69,10 +73,12 @@ public interface ReplicationTask extends ActiveTask {
     /**
      * @return the sequence number of the source database
      */
-    long getSourceSequenceId();
+    String getSourceSequenceId();
 
     /**
      * @return the latest sequence number of the source database which has been processed by this task
      */
-    long getCheckpointedSourceSequenceId();
+	String getCheckpointedSourceSequenceId();
+
+	long getCheckpointInterval();
 }

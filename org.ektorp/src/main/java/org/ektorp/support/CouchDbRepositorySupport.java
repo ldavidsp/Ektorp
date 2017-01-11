@@ -307,7 +307,7 @@ public class CouchDbRepositorySupport<T> implements GenericRepository<T> {
 	/**
 	 * Wait a short while in order to prevent racing initializations from other repositories.
 	 */
-	private void backOff() {
+	protected void backOff() {
 		try {
 			Thread.sleep(new Random().nextInt(400));
 		} catch (InterruptedException ie) {

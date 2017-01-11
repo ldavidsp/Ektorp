@@ -2,6 +2,7 @@ package org.ektorp.impl;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.ektorp.ActiveTask;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
    use = JsonTypeInfo.Id.NAME,
    include = JsonTypeInfo.As.PROPERTY,
    property = "type")
+@JsonIgnoreProperties(ignoreUnknown=true)
 @JsonSubTypes({
    @Type(value = StdReplicationTask.class, name = "replication"),
    @Type(value = StdIndexerTask.class, name = "indexer"),
@@ -25,8 +27,9 @@ public abstract class StdActiveTask implements ActiveTask {
     private int progress;
     private Date startedOn;
     private Date updatedOn;
+	private String node;
 
-    @Override
+	@Override
     public String getPid() {
         return pid;
     }
@@ -63,4 +66,13 @@ public abstract class StdActiveTask implements ActiveTask {
     public void setUpdatedOn(Date updatedOn) {
         this.updatedOn = updatedOn;
     }
+
+	public String getNode() {
+		return node;
+	}
+
+	@JsonProperty(required = false, value = "node")
+	public void setNode(String node) {
+		this.node = node;
+	}
 }
