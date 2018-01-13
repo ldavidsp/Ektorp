@@ -340,8 +340,8 @@ public class StdCouchDbConnector implements CouchDbConnector {
             }
         });
     }
-    
-    
+
+
     @Override
     public InputStream getAsStream(String id) {
         assertDocIdHasValue(id);
@@ -397,12 +397,12 @@ public class StdCouchDbConnector implements CouchDbConnector {
                 dbURI.append(id).param("rev", revision).toString(),
                 revisionHandler).getRevision();
     }
-    
+
     @Override
     public String copy(String sourceDocId, String targetDocId) {
     	return copy(sourceDocId, targetDocId, null);
     }
-    
+
     @Override
     public String copy(String sourceDocId, String targetDocId,
     		String targetRevision) {
@@ -570,7 +570,7 @@ public class StdCouchDbConnector implements CouchDbConnector {
     @Override
     public ReplicationStatus replicateFrom(String source) {
         ReplicationCommand cmd = new ReplicationCommand.Builder()
-                .target(dbName).source(source).build();
+                .target("http://127.0.0.1:5984/"+dbName).source(source).build();
 
         return dbInstance.replicate(cmd);
     }
@@ -579,7 +579,7 @@ public class StdCouchDbConnector implements CouchDbConnector {
     public ReplicationStatus replicateFrom(String source,
             Collection<String> docIds) {
         ReplicationCommand cmd = new ReplicationCommand.Builder()
-                .target(dbName).source(source).docIds(docIds).build();
+                .target("http://127.0.0.1:5984/"+dbName).source(source).docIds(docIds).build();
 
         return dbInstance.replicate(cmd);
     }

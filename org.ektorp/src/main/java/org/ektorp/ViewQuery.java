@@ -664,7 +664,6 @@ public class ViewQuery {
 		return query;
 	}
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings({"SA_FIELD_SELF_ASSIGNMENT", "CN_IMPLEMENTS_CLONE_BUT_NOT_CLONEABLE"})
 	public ViewQuery clone() {
 		ViewQuery copy = new ViewQuery();
 		copy.mapper = mapper;
@@ -695,7 +694,7 @@ public class ViewQuery {
 		copy.viewName = viewName;
 		return copy;
 	}
-	
+
 	private String jsonEncode(Object key) {
 		try {
 			return mapper.writeValueAsString(key);
@@ -875,7 +874,7 @@ public class ViewQuery {
 	public boolean isIgnoreNotFound() {
 		return ignoreNotFound;
 	}
-	
+
 	@Override
 	public String toString() {
 		return buildQuery();
@@ -904,8 +903,7 @@ public class ViewQuery {
         public List<?> getValues() {
             return Collections.unmodifiableList(keys);
 		}
-		
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="CN_IMPLEMENTS_CLONE_BUT_NOT_CLONEABLE")
+
 		public Keys clone() {
 			return new Keys(keys);
 		}

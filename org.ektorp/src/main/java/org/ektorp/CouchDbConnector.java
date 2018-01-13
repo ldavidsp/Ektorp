@@ -22,8 +22,7 @@ public interface CouchDbConnector extends LocalBulkBuffer {
     /**
      *
      * @param id
-     * @param the
-     *            object to store in the database
+     * @param o the object to store in the database
      * @throws UpdateConflictException
      *             if there was an update conflict.
      */

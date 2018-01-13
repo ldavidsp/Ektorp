@@ -17,7 +17,6 @@ import java.io.*;
  * @see org.apache.http.entity.SerializableEntity
  */
 @NotThreadSafe
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "HE_EQUALS_USE_HASHCODE")
 public class JacksonableEntity extends AbstractHttpEntity {
 
     private byte[] objSer;

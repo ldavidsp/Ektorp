@@ -9,9 +9,9 @@ import org.ektorp.util.Base64;
 import org.ektorp.util.Exceptions;
 
 /**
- * 
+ *
  * @author henrik lundgren
- * 
+ *
  */
 public class PageRequest {
 
@@ -27,7 +27,6 @@ public class PageRequest {
 	private final boolean back;
 	private final int page;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DB_DUPLICATE_BRANCHES")
 	public static ViewQuery applyPagingParameters(ViewQuery q, PageRequest pr) {
 		ViewQuery pagedQuery = q.clone();
 		if (pr.page > 0) {
@@ -39,9 +38,9 @@ public class PageRequest {
 			}
 			if (pr.back) {
 				pagedQuery.descending(!pagedQuery.isDescending());
-			}	
+			}
 		}
-		
+
 		int offset = pr.back ? 1 : 1;
 		pagedQuery.limit(pr.getPageSize() + offset);
 		return pagedQuery;
@@ -50,11 +49,11 @@ public class PageRequest {
 	public int getPageNo() {
 		return page;
 	}
-	
+
 	public static PageRequest firstPage(int pageSize) {
 		return new Builder().pageSize(pageSize).build();
 	}
-	
+
 	public PageRequest.Builder nextRequest(Object nextStartKey,
 			String nextStartDocId) {
 		try {
@@ -108,8 +107,8 @@ public class PageRequest {
 			key = null;
 		}
 		return key;
-	} 
-	
+	}
+
 	public String asLink() {
 		try {
 			return Base64.encodeBytes(MAPPER.writeValueAsBytes(asJson()),
@@ -142,9 +141,7 @@ public class PageRequest {
 		return nextKey != null ? nextKey.docId : null;
 	}
 	/**
-	 * 
-	 * @param startKey
-	 * @param startDocId
+	 *
 	 * @return
 	 */
 	public PageRequest getPreviousPageRequest() {
@@ -153,7 +150,7 @@ public class PageRequest {
 					.build();
 	}
 
-	
+
 	public boolean isBack() {
 		return back;
 	}
@@ -163,8 +160,8 @@ public class PageRequest {
 		return asJson().toString();
 	}
 
-	
-	
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -200,43 +197,43 @@ public class PageRequest {
 
 
 	public static class Builder {
-		
+
 		private int pageSize;
 		private KeyIdPair nextKey;
 		private boolean back;
 		private int page;
-		
+
 		public Builder() {
-			
+
 		}
-		
+
 		public Builder(PageRequest prototype) {
 			this.back = prototype.back;
 			this.nextKey = prototype.nextKey;
 			this.page = prototype.page;
-			this.pageSize = prototype.pageSize; 
+			this.pageSize = prototype.pageSize;
 		}
-		
+
 		public Builder pageSize(int i) {
 			this.pageSize = i;
 			return this;
 		}
-		
+
 		public Builder page(int i) {
 			this.page = i;
 			return this;
 		}
-		
+
 		public Builder back(boolean b) {
 			this.back = b;
 			return this;
 		}
-		
+
 		public Builder nextKey(KeyIdPair k) {
 			this.nextKey = k;
 			return this;
 		}
-		
+
 		public PageRequest build() {
 			return new PageRequest(this);
 		}
@@ -244,16 +241,16 @@ public class PageRequest {
 		public int getPageNo() {
 			return page;
 		}
-		
+
 		public int getNextPage() {
 			return page + 1;
 		}
-		
+
 		public int getPrevPage() {
 			return page - 1;
 		}
-	} 
-	
+	}
+
 	public static final class KeyIdPair {
 		final JsonNode key;
 		final String docId;
@@ -293,8 +290,8 @@ public class PageRequest {
 				return false;
 			return true;
 		}
-		
-		
+
+
 	}
 
 }
