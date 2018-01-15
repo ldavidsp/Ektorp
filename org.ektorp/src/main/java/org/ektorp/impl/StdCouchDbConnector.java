@@ -570,7 +570,7 @@ public class StdCouchDbConnector implements CouchDbConnector {
     @Override
     public ReplicationStatus replicateFrom(String source) {
         ReplicationCommand cmd = new ReplicationCommand.Builder()
-                .target("http://127.0.0.1:5984/"+dbName).source(source).build();
+                .target(dbName).source(source).build();
 
         return dbInstance.replicate(cmd);
     }
@@ -579,7 +579,7 @@ public class StdCouchDbConnector implements CouchDbConnector {
     public ReplicationStatus replicateFrom(String source,
             Collection<String> docIds) {
         ReplicationCommand cmd = new ReplicationCommand.Builder()
-                .target("http://127.0.0.1:5984/"+dbName).source(source).docIds(docIds).build();
+                .target(dbName).source(source).docIds(docIds).build();
 
         return dbInstance.replicate(cmd);
     }
