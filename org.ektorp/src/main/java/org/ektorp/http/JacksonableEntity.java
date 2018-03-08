@@ -1,7 +1,7 @@
 package org.ektorp.http;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.http.annotation.NotThreadSafe;
+import net.jcip.annotations.NotThreadSafe;
 import org.apache.http.entity.AbstractHttpEntity;
 import org.ektorp.util.Assert;
 import org.ektorp.util.Exceptions;
