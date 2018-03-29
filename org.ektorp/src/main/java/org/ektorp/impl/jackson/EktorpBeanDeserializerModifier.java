@@ -126,7 +126,7 @@ public class EktorpBeanDeserializerModifier extends BeanDeserializerModifier {
 		// need to ensure method is callable (for non-public)
 		if (config
 				.isEnabled(MapperFeature.CAN_OVERRIDE_ACCESS_MODIFIERS)) {
-			setter.fixAccess();
+			setter.fixAccess(true);
 		}
 
 		/*
