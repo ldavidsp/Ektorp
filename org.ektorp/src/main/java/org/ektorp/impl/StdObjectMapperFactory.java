@@ -2,6 +2,7 @@ package org.ektorp.impl;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -45,6 +46,7 @@ public class StdObjectMapperFactory implements ObjectMapperFactory {
 
 	private void applyDefaultConfiguration(ObjectMapper om) {
 		om.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, this.writeDatesAsTimestamps);
+		om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		//om.getSerializationConfig().withSerializationInclusion(JsonInclude.Include.NON_NULL);
 	}
 
