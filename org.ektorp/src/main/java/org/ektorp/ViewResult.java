@@ -35,7 +35,7 @@ public class ViewResult implements Iterable<ViewResult.Row>, Serializable {
 			totalRows = resultNode.get(TOTAL_ROWS_FIELD_NAME).intValue();
 		}
 		if (resultNode.get(OFFSET_FIELD_NAME) != null) {
-			offset = resultNode.get(OFFSET_FIELD_NAME).intValue();
+			offset = resultNode.get(OFFSET_FIELD_NAME).isNull()?-1:resultNode.get(OFFSET_FIELD_NAME).intValue();
 		}
 		if (resultNode.get(UPDATE_SEQ) != null) {
 			updateSeq = resultNode.get(UPDATE_SEQ).textValue();
