@@ -309,7 +309,7 @@ public class DesignDocument extends OpenCouchDbDocument {
     	 */
     	private Map<String, Object> anonymous() {
     		if (anonymous == null) {
-    			anonymous = new HashMap<String, Object>();
+    			anonymous = new HashMap<>();
     		}
     		return anonymous;
     	}
@@ -337,12 +337,12 @@ public class DesignDocument extends OpenCouchDbDocument {
             if (map == null) {
                 if (other.map != null)
                     return false;
-            } else if (!map.equals(other.map))
+            } else if (other.map == null || !map.replaceAll("\\s+","").equalsIgnoreCase(other.map.replaceAll("\\s+","")))
                 return false;
             if (reduce == null) {
                 if (other.reduce != null)
                     return false;
-            } else if (!reduce.equals(other.reduce))
+            } else if (other.reduce == null || !reduce.replaceAll("\\s+","").equalsIgnoreCase(other.reduce.replaceAll("\\s+","")))
                 return false;
             if(anonymous == null){
             	if(other.anonymous != null)
