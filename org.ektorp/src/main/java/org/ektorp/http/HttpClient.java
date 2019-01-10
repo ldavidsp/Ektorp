@@ -27,6 +27,8 @@ public interface HttpClient {
 
 	HttpResponse post(String uri, HttpEntity httpEntity);
 
+	String getUuid();
+
 	HttpResponse delete(String uri);
 
 	HttpResponse head(String uri);

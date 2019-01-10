@@ -106,4 +106,6 @@ public interface CouchDbInstance {
      * @return all active tasks
      */
     Collection<ActiveTask> getActiveTasks();
+
+    String getUuid();
 }

@@ -23,6 +23,7 @@ public class StdCouchDbInstance implements CouchDbInstance {
 	private final static Logger LOG = LoggerFactory.getLogger(StdCouchDbInstance.class);
 	private final static TypeReference<List<String>> STRING_LIST_TYPE_DEF = new TypeReference<List<String>>() {};
 
+	private final String uuid;
 	private final HttpClient client;
 	private final RestTemplate restTemplate;
 	private final ObjectMapper objectMapper;
@@ -39,6 +40,7 @@ public class StdCouchDbInstance implements CouchDbInstance {
 		this.restTemplate = new RestTemplate(client);
 		this.objectMapper = of.createObjectMapper();
 		this.objectMapperFactory = of;
+		this.uuid = client.getUuid();
 	}
 
 	public ObjectMapperFactory getObjectMapperFactory() {
@@ -209,4 +211,9 @@ public class StdCouchDbInstance implements CouchDbInstance {
 
       return ret;
    }
+
+	@Override
+	public String getUuid() {
+		return uuid;
+	}
 }

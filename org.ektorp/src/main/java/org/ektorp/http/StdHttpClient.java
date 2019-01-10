@@ -9,6 +9,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
@@ -49,7 +50,7 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class StdHttpClient implements HttpClient {
-
+	private final String uuid;
 	private final org.apache.http.client.HttpClient client;
 	private final org.apache.http.client.HttpClient backend;
 	private final static Logger LOG = LoggerFactory
@@ -62,6 +63,8 @@ public class StdHttpClient implements HttpClient {
 			org.apache.http.client.HttpClient backend) {
 		this.client = hc;
 		this.backend = backend;
+
+		uuid = DigestUtils.sha256Hex(((HttpHost)hc.getParams().getParameter(ClientPNames.DEFAULT_HOST)).toHostString());
 	}
 
 	public org.apache.http.client.HttpClient getClient() {
@@ -71,6 +74,9 @@ public class StdHttpClient implements HttpClient {
 	public org.apache.http.client.HttpClient getBackend() {
 		return backend;
 	}
+
+	@Override
+	public String getUuid() { return uuid; }
 
 	@Override
 	public HttpResponse delete(String uri) {
