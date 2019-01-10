@@ -183,8 +183,8 @@ public class DesignDocument extends OpenCouchDbDocument {
         filters().remove(name);
     }
 
-    public boolean mergeWith(DesignDocument dd) {
-        boolean updateOnDiff = updateOnDiff();
+    public boolean mergeWith(DesignDocument dd, boolean forceUpdate) {
+        boolean updateOnDiff = forceUpdate || updateOnDiff();
         boolean changed = mergeViews(dd.views(), updateOnDiff);
         changed = mergeFunctions(lists(), dd.lists(), updateOnDiff) || changed;
         changed = mergeFunctions(shows(), dd.shows(), updateOnDiff) || changed;

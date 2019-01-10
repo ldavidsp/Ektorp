@@ -16,7 +16,6 @@ import org.ektorp.util.Documents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -271,10 +270,14 @@ public class CouchDbRepositorySupport<T> implements GenericRepository<T> {
 	 * </p>
 	 */
 	public void initStandardDesignDocument() {
-		initDesignDocInternal(0);
+		initDesignDocInternal(0, false);
 	}
 
-	private void initDesignDocInternal(int invocations) {
+	public void forceInitStandardDesignDocument() {
+		initDesignDocInternal(0, true);
+	}
+
+	private void initDesignDocInternal(int invocations, boolean forceUpdate) {
 		DesignDocument designDoc;
 		if (db.contains(stdDesignDocumentId)) {
 			designDoc = getDesignDocumentFactory().getFromDatabase(db, stdDesignDocumentId);
@@ -284,7 +287,7 @@ public class CouchDbRepositorySupport<T> implements GenericRepository<T> {
 		}
 		log.debug("Generating DesignDocument for {}", getHandledType());
 		DesignDocument generated = getDesignDocumentFactory().generateFrom(this);
-		boolean changed = designDoc.mergeWith(generated);
+		boolean changed = designDoc.mergeWith(generated, forceUpdate);
 		if (log.isDebugEnabled()) {
 			debugDesignDoc(designDoc);
 		}
@@ -297,7 +300,7 @@ public class CouchDbRepositorySupport<T> implements GenericRepository<T> {
 				if (invocations == 0) {
 					backOff();
 					log.info("retrying initStandardDesignDocument for design document: {}", designDoc.getId());
-					initDesignDocInternal(1);
+					initDesignDocInternal(1, forceUpdate);
 				}
 			}
 		} else {
