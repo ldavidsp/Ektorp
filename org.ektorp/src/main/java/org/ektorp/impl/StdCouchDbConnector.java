@@ -26,6 +26,8 @@ import org.ektorp.util.Documents;
 import org.ektorp.util.Exceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.taktik.icure.dao.impl.ektorp.CouchKeyValue;
+import org.taktik.icure.dao.impl.ektorp.EmbeddedDocViewWithKeysResponseHandler;
 
 /**
  *
@@ -445,6 +447,17 @@ public class StdCouchDbConnector implements CouchDbConnector {
         query.dbPath(dbURI.toString());
 
         return executeQuery(query, docIdResponseHandler);
+    }
+
+    @Override
+    public <T> List<CouchKeyValue<T>> queryViewWithKeys(final ViewQuery query, final Class<T> type) {
+        Assert.notNull(query, "query may not be null");
+        query.dbPath(dbURI.toString());
+
+        EmbeddedDocViewWithKeysResponseHandler<T> rhk = new EmbeddedDocViewWithKeysResponseHandler<T>(
+                type, objectMapper, query.isIgnoreNotFound());
+
+        return executeQuery(query, rhk);
     }
 
     @Override

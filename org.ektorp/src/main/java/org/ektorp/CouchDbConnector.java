@@ -9,6 +9,7 @@ import org.ektorp.changes.ChangesCommand;
 import org.ektorp.changes.ChangesFeed;
 import org.ektorp.changes.DocumentChange;
 import org.ektorp.http.HttpClient;
+import org.taktik.icure.dao.impl.ektorp.CouchKeyValue;
 
 /**
  * Primary interface for working with Objects mapped as documents in CouchDb.
@@ -315,6 +316,8 @@ public interface CouchDbConnector extends LocalBulkBuffer {
      * @return the view result mapped as the specified class.
      */
     <T> List<T> queryView(ViewQuery query, Class<T> type);
+
+    <T> List<CouchKeyValue<T>> queryViewWithKeys(ViewQuery query, Class<T> type);
 
 	List<ComplexKey> queryViewForComplexKeys(ViewQuery query);
 
