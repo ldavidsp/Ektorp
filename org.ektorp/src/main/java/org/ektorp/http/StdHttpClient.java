@@ -45,9 +45,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 
+ *
  * @author henrik lundgren
- * 
+ *
  */
 public class StdHttpClient implements HttpClient {
 	private final String uuid;
@@ -59,7 +59,7 @@ public class StdHttpClient implements HttpClient {
 	public StdHttpClient(org.apache.http.client.HttpClient hc) {
 		this(hc, hc);
 	}
-	public StdHttpClient(org.apache.http.client.HttpClient hc, 
+	public StdHttpClient(org.apache.http.client.HttpClient hc,
 			org.apache.http.client.HttpClient backend) {
 		this.client = hc;
 		this.backend = backend;
@@ -187,7 +187,7 @@ public class StdHttpClient implements HttpClient {
 			return createHttpResponse(rsp, request);
 		} catch (Exception e) {
 			throw Exceptions.propagate(e);
-		}		
+		}
 	}
 
 	protected HttpResponse createHttpResponse(org.apache.http.HttpResponse rsp, HttpUriRequest httpRequest) {
@@ -202,7 +202,7 @@ public class StdHttpClient implements HttpClient {
 	public HttpResponse copy(String sourceUri, String destination) {
 		return executeRequest(new HttpCopyRequest(sourceUri, destination), true);
 	}
-	
+
 	public void shutdown() {
 		client.getConnectionManager().shutdown();
 	}
@@ -214,8 +214,8 @@ public class StdHttpClient implements HttpClient {
 	public static class Builder {
 		protected String host = "localhost";
 		protected int port = 5984;
-		protected int maxConnections = 20;
-		protected int connectionTimeout = 1000;
+		protected int maxConnections = 500;
+		protected int connectionTimeout = 2000;
 		protected int socketTimeout = 10000;
 		protected ClientConnectionManager conman;
 		protected int proxyPort = -1;
@@ -241,7 +241,7 @@ public class StdHttpClient implements HttpClient {
 		}
 		/**
 		 * Will set host, port and possible enables SSL based on the properties if the supplied URL.
-		 * This method overrides the properties: host, port and enableSSL. 
+		 * This method overrides the properties: host, port and enableSSL.
 		 * @param url
 		 * @return
 		 */
@@ -265,7 +265,7 @@ public class StdHttpClient implements HttpClient {
 			}
 			return this;
 		}
-		
+
 		public Builder host(String s) {
 			host = s;
 			return this;
@@ -280,7 +280,7 @@ public class StdHttpClient implements HttpClient {
 			proxy = s;
 			return this;
 		}
-		
+
 		/**
 		 * Controls if the http client should send Accept-Encoding: gzip,deflate
 		 * header and handle Content-Encoding responses. This enable compression
@@ -289,7 +289,7 @@ public class StdHttpClient implements HttpClient {
 		 * this.
 		 * <p>
 		 * Disabled by default (for backward compatibility).
-		 * 
+		 *
 		 * @param b
 		 * @return This builder
 		 */
@@ -307,7 +307,7 @@ public class StdHttpClient implements HttpClient {
 			caching = b;
 			return this;
 		}
-		
+
 		public Builder maxCacheEntries(int m) {
 			maxCacheEntries = m;
 			return this;
@@ -403,7 +403,7 @@ public class StdHttpClient implements HttpClient {
 				client.addRequestInterceptor(
 						new PreemptiveAuthRequestInterceptor(), 0);
 			}
-			
+
 			if (compression) {
 				return new DecompressingHttpClient(client);
 			}
@@ -443,7 +443,7 @@ public class StdHttpClient implements HttpClient {
 		/**
 		 * If set to true, a monitor thread will be started that cleans up idle
 		 * connections every 30 seconds.
-		 * 
+		 *
 		 * @param b
 		 * @return
 		 */
@@ -456,7 +456,7 @@ public class StdHttpClient implements HttpClient {
 		 * Bring your own Connection Manager. If this parameters is set, the
 		 * parameters port, maxConnections, connectionTimeout and socketTimeout
 		 * are ignored.
-		 * 
+		 *
 		 * @param cm
 		 * @return
 		 */
@@ -468,7 +468,7 @@ public class StdHttpClient implements HttpClient {
 		/**
 		 * Set to true in order to enable SSL sockets. Note that the CouchDB
 		 * host must be accessible through a https:// path Default is false.
-		 * 
+		 *
 		 * @param s
 		 * @return
 		 */
@@ -481,7 +481,7 @@ public class StdHttpClient implements HttpClient {
 		 * Bring your own SSLSocketFactory. Note that schemeName must be also be
 		 * configured to "https". Will override any setting of
 		 * relaxedSSLSettings.
-		 * 
+		 *
 		 * @param f
 		 * @return
 		 */
@@ -493,7 +493,7 @@ public class StdHttpClient implements HttpClient {
 		/**
 		 * If set to true all SSL certificates and hosts will be trusted. This
 		 * might be handy during development. default is false.
-		 * 
+		 *
 		 * @param b
 		 * @return
 		 */
@@ -506,7 +506,7 @@ public class StdHttpClient implements HttpClient {
 		 * Activates 'Expect: 100-Continue' handshake with CouchDB.
 		 * Using expect continue can reduce stale connection problems for PUT / POST operations.
 		 * body. Enabled by default.
-		 * 
+		 *
 		 * @param b
 		 * @return
 		 */
@@ -530,7 +530,7 @@ public class StdHttpClient implements HttpClient {
         // separate class to avoid runtime dependency to httpclient-cache unless using caching
 	public static class WithCachingBuilder {
 		public static org.apache.http.client.HttpClient withCaching(org.apache.http.client.HttpClient client, int maxCacheEntries, int maxObjectSizeBytes) {
-			CacheConfig cacheConfig = new CacheConfig();  
+			CacheConfig cacheConfig = new CacheConfig();
 			cacheConfig.setMaxCacheEntries(maxCacheEntries);
 			cacheConfig.setMaxObjectSize(maxObjectSizeBytes);
 			return new CachingHttpClient(client, cacheConfig);
