@@ -269,7 +269,7 @@ public class CouchDbRepositorySupport<T> implements GenericRepository<T> {
  	 * TIP: The generated DesignDocument will be written to the log if debug log level is enabled.
 	 * </p>
 	 */
-	public void initStandardDesignDocument() {
+	public final void initStandardDesignDocument() {
 		initDesignDocInternal(0, false);
 	}
 
