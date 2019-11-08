@@ -81,26 +81,26 @@ public class URI {
 		uri = null;
 		return this;
 	}
-
+	
 	public URI param(String name, int value) {
 		return param(name, Integer.toString(value));
 	}
-
+	
 	public URI param(String name, long value) {
 		return param(name, Long.toString(value));
 	}
-
+	
 	private StringBuilder params() {
 		if (params == null) {
 			params = new StringBuilder();
 		}
 		return params;
 	}
-
+	
 	@Override
 	public String toString() {
 		if (uri == null) {
-			uri = params != null ? path.append(params).toString() : path.toString();
+			uri = params != null ? path.append(params).toString() : path.toString(); 
 		}
 		return uri;
 	}
