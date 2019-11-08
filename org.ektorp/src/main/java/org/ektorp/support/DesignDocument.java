@@ -31,7 +31,8 @@ public class DesignDocument extends OpenCouchDbDocument {
     public static final String AUTO_UPDATE_VIEW_ON_CHANGE = "org.ektorp.support.AutoUpdateViewOnChange";
     public static final String UPDATE_ON_DIFF = "org.ektorp.support.UpdateDesignDocOnDiff";
 
-    private Map<String, View>   views;
+    private Map<String, View> views;
+
     private Map<String, String> lists;
     private Map<String, String> shows;
     private Map<String, String> updateHandlers;
