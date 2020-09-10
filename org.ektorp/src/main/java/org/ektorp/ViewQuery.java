@@ -602,7 +602,7 @@ public class ViewQuery {
 			query.param("key", jsonEncode(key));
 		}
 
-		if (isNotEmpty(startKey)) {
+		if (isNotEmpty(startKey) || isNotEmpty(startDocId)) {
 			query.param("startkey", jsonEncode(startKey));
 		}
 
