@@ -2,6 +2,7 @@ package org.ektorp.http;
 
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.Map;
 
@@ -182,9 +183,13 @@ public class StdHttpClient implements HttpClient {
 			} else {
 				rsp = client.execute(getHttpHost(), request);
 			}
-			LOG.trace("{} {} {} {}", new Object[] { request.getMethod(), request.getURI(),
-					rsp.getStatusLine().getStatusCode(), rsp.getStatusLine().getReasonPhrase() });
+			LOG.trace("{} {} {} {}", request.getMethod(), request.getURI(),
+                    rsp.getStatusLine().getStatusCode(), rsp.getStatusLine().getReasonPhrase());
 			return createHttpResponse(rsp, request);
+        } catch (SocketTimeoutException e) {
+            LOG.info("Socket timeout on {} {}", request.getMethod(), request.getURI());
+
+            throw Exceptions.propagate(e);
 		} catch (Exception e) {
 			throw Exceptions.propagate(e);
 		}
