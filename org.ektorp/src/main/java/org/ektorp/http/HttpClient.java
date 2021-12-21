@@ -38,6 +38,8 @@ public interface HttpClient {
 	HttpResponse postUncached(String uri, String content);
 
 	HttpResponse copy(String sourceUri, String destination);
-	
-	void shutdown();
+
+    void close();
+
+    void shutdown();
 }
