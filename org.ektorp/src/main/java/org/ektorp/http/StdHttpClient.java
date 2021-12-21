@@ -198,7 +198,7 @@ public class StdHttpClient implements HttpClient {
 	}
 
 	protected HttpResponse createHttpResponse(org.apache.http.HttpResponse rsp, HttpUriRequest httpRequest) {
-		return new StdHttpResponse(rsp.getEntity(), rsp.getStatusLine(), httpRequest, rsp.getFirstHeader("ETag"));
+		return new StdHttpResponse(rsp, rsp.getEntity(), rsp.getStatusLine(), httpRequest, rsp.getFirstHeader("ETag"));
 	}
 
 	protected HttpResponse executeRequest(HttpRequestBase request) {
@@ -344,8 +344,7 @@ public class StdHttpClient implements HttpClient {
 			return this;
 		}
 
-		public ClientConnectionManager configureConnectionManager(
-				HttpParams params) {
+		public ClientConnectionManager configureConnectionManager(HttpParams params) {
 			if (conman == null) {
 				SchemeRegistry schemeRegistry = new SchemeRegistry();
 				schemeRegistry.register(configureScheme());
@@ -405,8 +404,7 @@ public class StdHttpClient implements HttpClient {
 		public org.apache.http.client.HttpClient configureClient() {
 			HttpParams params = new BasicHttpParams();
 			HttpProtocolParams.setUseExpectContinue(params, useExpectContinue);
-			HttpConnectionParams
-					.setConnectionTimeout(params, connectionTimeout);
+			HttpConnectionParams.setConnectionTimeout(params, connectionTimeout);
 			HttpConnectionParams.setSoTimeout(params, socketTimeout);
 			HttpConnectionParams.setTcpNoDelay(params, Boolean.TRUE);
 
@@ -415,8 +413,7 @@ public class StdHttpClient implements HttpClient {
 			if (enableSSL)
                 protocol = "https";
 
-			params.setParameter(ClientPNames.DEFAULT_HOST, new HttpHost(host,
-					port, protocol));
+			params.setParameter(ClientPNames.DEFAULT_HOST, new HttpHost(host, port, protocol));
 			if (proxy != null) {
 				params.setParameter(ConnRoutePNames.DEFAULT_PROXY,
 						new HttpHost(proxy, proxyPort, protocol));
