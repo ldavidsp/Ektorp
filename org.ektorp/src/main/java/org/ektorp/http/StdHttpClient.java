@@ -27,6 +27,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.params.ClientPNames;
 import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.ConnectionPoolTimeoutException;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
@@ -192,7 +193,10 @@ public class StdHttpClient implements HttpClient {
             LOG.info("Socket timeout on {} {}", request.getMethod(), request.getURI());
 
             throw Exceptions.propagate(e);
-		} catch (Exception e) {
+		} catch (ConnectionPoolTimeoutException e) {
+            HealthIndicator.incrementErrorCount();
+            throw Exceptions.propagate(e);
+        } catch (Exception e) {
 			throw Exceptions.propagate(e);
 		}
 	}
@@ -493,7 +497,7 @@ public class StdHttpClient implements HttpClient {
 		 * Set to true in order to enable SSL sockets. Note that the CouchDB
 		 * host must be accessible through a https:// path Default is false.
 		 *
-		 * @param s
+		 * @param b
 		 * @return
 		 */
 		public Builder enableSSL(boolean b) {
