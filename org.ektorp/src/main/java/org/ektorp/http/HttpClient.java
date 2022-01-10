@@ -39,7 +39,5 @@ public interface HttpClient {
 
 	HttpResponse copy(String sourceUri, String destination);
 
-    void close();
-
     void shutdown();
 }
