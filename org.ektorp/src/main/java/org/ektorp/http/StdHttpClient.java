@@ -1,7 +1,5 @@
 package org.ektorp.http;
 
-import java.io.Closeable;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
@@ -213,26 +211,6 @@ public class StdHttpClient implements HttpClient {
 	public HttpResponse copy(String sourceUri, String destination) {
 		return executeRequest(new HttpCopyRequest(sourceUri, destination), true);
 	}
-
-	@Override
-	public void close() {
-	    if (client != null && client instanceof Closeable) {
-            try {
-                LOG.info("Closing http client");
-                ((Closeable) client).close();
-            } catch (IOException e) {
-                LOG.error("Cannot close httpclient", e);
-            }
-        }
-	    if (backend != null && client != backend && backend instanceof Closeable) {
-            try {
-                LOG.info("Closing http backend");
-                ((Closeable) backend).close();
-            } catch (IOException e) {
-                LOG.error("Cannot close httpclient", e);
-            }
-        }
-    }
 
 	public void shutdown() {
 		client.getConnectionManager().shutdown();
